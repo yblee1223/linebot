@@ -1,0 +1,17 @@
+[
+  {
+    "Sourcefile": null,
+    "Include": "",
+    "Includepath": "/Users/iyongbin/Library/Arduino15/packages/arduino/hardware/sam/1.6.12/cores/arduino"
+  },
+  {
+    "Sourcefile": null,
+    "Include": "",
+    "Includepath": "/Users/iyongbin/Library/Arduino15/packages/arduino/hardware/sam/1.6.12/variants/arduino_due_x"
+  },
+  {
+    "Sourcefile": "/Users/iyongbin/Repository/linebot/ArduinoOutput/sketch/motor.ino.cpp",
+    "Include": "",
+    "Includepath": null
+  }
+]

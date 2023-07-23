@@ -1,143 +1,123 @@
-# 1 "/Users/iyongbin/Repository/linebot/src/motor/motor.ino"
-// void setup()
-// {
-//     Serial.begin(9600);
-// }
-
-// void loop()
-// {
-//     int a = Serial.read();
-//     if (a != -1){
-//         Serial.println("Hello People");
-//     }
-//     Serial.println("Hello ino");
-// }
+# 1 "/Users/iyongbin/Repository/linebot/src/linetracer/linetracer.ino"
+// InfraRed ray sensor
 
 
-// Motor A connections
-int enA = 9;
-int in1 = 8;
-int in2 = 7;
-// Motor B connections
-int enB = 3;
-int in3 = 5;
-int in4 = 4;
 
-void directionControl(int dir);
-void speedControl();
+
+// Motor A connections Left
+
+
+
+
+// Motor B connections Right
+
+
+
+
+void linetracing();
 
 void setup() {
-  // Set all the motor control pins to outputs
-  pinMode(enA, 0x1);
-  pinMode(enB, 0x1);
-  pinMode(in1, 0x1);
-  pinMode(in2, 0x1);
-  pinMode(in3, 0x1);
-  pinMode(in4, 0x1);
+    // Set all the motor control pins to outputs
+    pinMode(9, 0x1);
+    pinMode(3, 0x1);
+    pinMode(8 /* ccw*/, 0x1);
+    pinMode(7 /* cw*/, 0x1);
+    pinMode(5 /* cw*/, 0x1);
+    pinMode(4 /* ccw*/, 0x1);
 
-  // Turn off motors - Initial state
-  digitalWrite(in1, 0x0);
-  digitalWrite(in2, 0x0);
-  digitalWrite(in3, 0x0);
-  digitalWrite(in4, 0x0);
+    pinMode(10, 0x0);
+    pinMode(11, 0x0);
+    pinMode(12, 0x0);
 
-  Serial.begin(9600);
+
+    analogWrite(9, 255);
+    analogWrite(3, 255);
+
+    // Turn off motors - Initial state
+    digitalWrite(8 /* ccw*/, 0x0);
+    digitalWrite(7 /* cw*/, 0x0);
+    digitalWrite(5 /* cw*/, 0x0);
+    digitalWrite(4 /* ccw*/, 0x0);
+
+    Serial.begin(9600);
+    Serial.println("Hello linebot!");
 }
 
-void loop() {
-  Serial.println("state:");
-  int dir = Serial.read(); // direcrtion
-  directionControl(0);
-  delay(4000);
-  directionControl(1);
-  delay(4000);
-  directionControl(2);
-  delay(4000);
-  directionControl(3);
-  delay(4000);
-  // speedControl();
-  // delay(1000);
+void loop()
+{
+    linetracing();
 }
-// back
+
+void linetracing()
+{
+    int left_sensor = digitalRead(10);
+    int middle_sensor = digitalRead(11);
+    int right_sensor = digitalRead(12);
+
+    Serial.println(left_sensor);
+    Serial.println(right_sensor);
+
+    // move forward
+    if (left_sensor==0x1 && right_sensor==0x1){
+        forward();
+    }
+
+    // control left
+    else if (left_sensor==0x1 && right_sensor==0x0){
+        left();
+    }
+
+    // control right
+    else if (left_sensor==0x0 && right_sensor==0x1){
+        right();
+    }
+
+    // // stop
+    // else if (left_sensor==LOW && middle_sensor==LOW && right_sensor==LOW){
+    //     stop();
+    // }
+}
 // forward
-// turn left
-// turn right
-
-// This function lets you control spinning direction of motors
-void directionControl(int dir) {
-  // Set motors to maximum speed
-  // For PWM maximum possible values are 0 to 255
-  analogWrite(enA, 255);
-  analogWrite(enB, 255);
-
-  // forward
-  if (dir == 0){
+void forward(){
     Serial.println("forward");
-    digitalWrite(in1, 0x1);
-    digitalWrite(in2, 0x0);
-    digitalWrite(in3, 0x0);
-    digitalWrite(in4, 0x1);
-  }
-  // backward
-  else if (dir == 1){
-    Serial.println("backward");
-    digitalWrite(in1, 0x0);
-    digitalWrite(in2, 0x1);
-    digitalWrite(in3, 0x1);
-    digitalWrite(in4, 0x0);
-  }
-  // turn right
-  else if (dir == 2){
-    Serial.println("turn right");
-    digitalWrite(in1, 0x0);
-    digitalWrite(in2, 0x1);
-    digitalWrite(in3, 0x0);
-    digitalWrite(in4, 0x1);
-  }
-
-  // turn left
-  else if (dir == 3){
-    Serial.println("turn left");
-    digitalWrite(in1, 0x1);
-    digitalWrite(in2, 0x0);
-    digitalWrite(in3, 0x1);
-    digitalWrite(in4, 0x0);
-  }
-  // stop
-  else {
-    Serial.println("stop");
-    digitalWrite(in1, 0x0);
-    digitalWrite(in2, 0x0);
-    digitalWrite(in3, 0x0);
-    digitalWrite(in4, 0x0);
-  }
+    digitalWrite(8 /* ccw*/, 0x0);
+    digitalWrite(7 /* cw*/, 0x1);
+    digitalWrite(5 /* cw*/, 0x1);
+    digitalWrite(4 /* ccw*/, 0x0);
 }
 
-// This function lets you control speed of the motors
-void speedControl() {
-  // Turn on motors
-  digitalWrite(in1, 0x0);
-  digitalWrite(in2, 0x1);
-  digitalWrite(in3, 0x0);
-  digitalWrite(in4, 0x1);
+// backward
+void backward(){
+    Serial.println("backward");
+    digitalWrite(8 /* ccw*/, 0x1);
+    digitalWrite(7 /* cw*/, 0x0);
+    digitalWrite(5 /* cw*/, 0x0);
+    digitalWrite(4 /* ccw*/, 0x1);
+}
 
-  // Accelerate from zero to maximum speed
-  for (int i = 0; i < 256; i++) {
-    analogWrite(enA, i);
-    analogWrite(enB, i);
-    delay(20);
-  }
+// turn left
+void left(){
+    Serial.println("turn left");
+    digitalWrite(8 /* ccw*/, 0x0);
+    digitalWrite(7 /* cw*/, 0x1);
+    digitalWrite(5 /* cw*/, 0x0);
+    digitalWrite(4 /* ccw*/, 0x1);
+}
 
-  // Decelerate from maximum speed to zero
-  for (int i = 255; i >= 0; --i) {
-    analogWrite(enA, i);
-    analogWrite(enB, i);
-    delay(20);
-  }
+// turn right
+void right(){
+    Serial.println("turn right");
+    digitalWrite(8 /* ccw*/, 0x1);
+    digitalWrite(7 /* cw*/, 0x0);
+    digitalWrite(5 /* cw*/, 0x1);
+    digitalWrite(4 /* ccw*/, 0x0);
+}
 
-  // Now turn off motors
-  digitalWrite(in1, 0x0);
-  digitalWrite(in2, 0x0);
-  digitalWrite(in3, 0x0);
-  digitalWrite(in4, 0x0);
+// stop
+void stop(){
+    Serial.println("stop");
+    digitalWrite(8 /* ccw*/, 0x0);
+    digitalWrite(7 /* cw*/, 0x0);
+    digitalWrite(5 /* cw*/, 0x0);
+    digitalWrite(4 /* ccw*/, 0x0);
 }

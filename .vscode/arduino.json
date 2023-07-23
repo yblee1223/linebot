@@ -1,0 +1,6 @@
+{
+    "sketch": "src/linetracer/linetracer.ino",
+    "board": "arduino:avr:uno",
+    "port": "/dev/tty.usbmodem1301",
+    "output": "./ArduinoOutput"
+}

@@ -1,28 +1,12 @@
-// void setup()
-// {
-//     Serial.begin(9600);
-// }
-
-// void loop()
-// {
-//     int a = Serial.read();
-//     if (a != -1){
-//         Serial.println("Hello People");
-//     }
-//     Serial.println("Hello ino");
-// }
-
-
 // Motor A connections
 int enA = 9;
-int in1 = 8;
-int in2 = 7;
+int in1 = 8; // ccw
+int in2 = 7; // cw
 // Motor B connections
 int enB = 3;
-int in3 = 5;
-int in4 = 4;
+int in3 = 5; // cw
+int in4 = 4; // ccw
 
-void directionControl(int dir);
 void speedControl();
 
 void setup() {
@@ -39,6 +23,9 @@ void setup() {
   digitalWrite(in2, LOW);
   digitalWrite(in3, LOW);
   digitalWrite(in4, LOW);
+  
+  analogWrite(enA, 255);
+  analogWrite(enB, 255);
 
   Serial.begin(9600);
 }
@@ -46,13 +33,13 @@ void setup() {
 void loop() {
   Serial.println("state:");
   int dir = Serial.read(); // direcrtion
-  directionControl(0);
+  forward();
   delay(4000);
-  directionControl(1);
+  backward();
   delay(4000);
-  directionControl(2);
+  left();
   delay(4000);
-  directionControl(3);
+  right();
   delay(4000);
   // speedControl();
   // delay(1000);
@@ -62,55 +49,6 @@ void loop() {
 // turn left
 // turn right
 
-// This function lets you control spinning direction of motors
-void directionControl(int dir) {
-  // Set motors to maximum speed
-  // For PWM maximum possible values are 0 to 255
-  analogWrite(enA, 255);
-  analogWrite(enB, 255);
-
-  // forward
-  if (dir == 0){
-    Serial.println("forward");
-    digitalWrite(in1, HIGH);
-    digitalWrite(in2, LOW);
-    digitalWrite(in3, LOW);
-    digitalWrite(in4, HIGH);
-  }
-  // backward
-  else if (dir == 1){
-    Serial.println("backward");
-    digitalWrite(in1, LOW);
-    digitalWrite(in2, HIGH);
-    digitalWrite(in3, HIGH);
-    digitalWrite(in4, LOW);
-  }
-  // turn right
-  else if (dir == 2){
-    Serial.println("turn right");
-    digitalWrite(in1, LOW);
-    digitalWrite(in2, HIGH);
-    digitalWrite(in3, LOW);
-    digitalWrite(in4, HIGH);
-  }
-  
-  // turn left
-  else if (dir == 3){
-    Serial.println("turn left");
-    digitalWrite(in1, HIGH);
-    digitalWrite(in2, LOW);
-    digitalWrite(in3, HIGH);
-    digitalWrite(in4, LOW);
-  }
-  // stop
-  else {
-    Serial.println("stop");
-    digitalWrite(in1, LOW);
-    digitalWrite(in2, LOW);
-    digitalWrite(in3, LOW);
-    digitalWrite(in4, LOW);
-  }
-}
 
 // This function lets you control speed of the motors
 void speedControl() {
@@ -139,4 +77,49 @@ void speedControl() {
   digitalWrite(in2, LOW);
   digitalWrite(in3, LOW);
   digitalWrite(in4, LOW);
+}
+
+// forward
+void forward(){
+    Serial.println("forward");
+    digitalWrite(in1, LOW);
+    digitalWrite(in2, HIGH);
+    digitalWrite(in3, HIGH);
+    digitalWrite(in4, LOW);
+}
+
+// backward
+void backward(){
+    Serial.println("backward");
+    digitalWrite(in1, HIGH);
+    digitalWrite(in2, LOW);
+    digitalWrite(in3, LOW);
+    digitalWrite(in4, HIGH);
+}
+
+// turn left
+void left(){
+    Serial.println("turn left");
+    digitalWrite(in1, LOW);
+    digitalWrite(in2, HIGH);
+    digitalWrite(in3, LOW);
+    digitalWrite(in4, HIGH);
+}
+
+// turn right
+void right(){
+    Serial.println("turn right");
+    digitalWrite(in1, HIGH);
+    digitalWrite(in2, LOW);
+    digitalWrite(in3, HIGH);
+    digitalWrite(in4, LOW);
+}
+
+// stop
+void stop(){
+    Serial.println("stop");
+    digitalWrite(in1, LOW);
+    digitalWrite(in2, LOW);
+    digitalWrite(in3, LOW);
+    digitalWrite(in4, LOW);
 }

@@ -3,9 +3,9 @@
   "builtInToolsFolders": "",
   "compiler.optimization_flags": "",
   "customBuildProperties": "",
-  "fqbn": "arduino:sam:arduino_due_x_dbg",
+  "fqbn": "arduino:avr:uno",
   "hardwareFolders": "/Users/iyongbin/Library/Arduino15/packages",
   "otherLibrariesFolders": "/Users/iyongbin/Documents/Arduino/libraries",
   "runtime.ide.version": "10607",
-  "sketchLocation": "/Users/iyongbin/Repository/linebot/src/motor"
+  "sketchLocation": "/Users/iyongbin/Repository/linebot/src/linetracer"
 }

@@ -2,15 +2,15 @@
   {
     "Sourcefile": null,
     "Include": "",
-    "Includepath": "/Users/iyongbin/Library/Arduino15/packages/arduino/hardware/sam/1.6.12/cores/arduino"
+    "Includepath": "/Users/iyongbin/Library/Arduino15/packages/arduino/hardware/avr/1.8.5/cores/arduino"
   },
   {
     "Sourcefile": null,
     "Include": "",
-    "Includepath": "/Users/iyongbin/Library/Arduino15/packages/arduino/hardware/sam/1.6.12/variants/arduino_due_x"
+    "Includepath": "/Users/iyongbin/Library/Arduino15/packages/arduino/hardware/avr/1.8.5/variants/standard"
   },
   {
-    "Sourcefile": "/Users/iyongbin/Repository/linebot/ArduinoOutput/sketch/motor.ino.cpp",
+    "Sourcefile": "/Users/iyongbin/Repository/linebot/ArduinoOutput/sketch/linetracer.ino.cpp",
     "Include": "",
     "Includepath": null
   }
